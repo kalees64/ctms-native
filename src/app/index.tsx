@@ -1,24 +1,23 @@
-// Native Components
+import { useNavigation, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Image, Text, View } from "react-native";
+import { Button, Text, View } from "react-native";
 
-// Styles
-import "./../../global.css";
-
-const index = () => {
+const Home = () => {
+  const router = useRouter();
   return (
-    <View className="flex-1 ">
-      <View>
-        <Text className="text-2xl font-bold text-center">CTMS</Text>
-        <Text className="text-2xl font-bold text-center">Login</Text>
-      </View>
+    <View className="flex-1 items-center justify-center">
+      <Text>Home</Text>
 
-      <View>
-        {/* <Image source={require("./../assets/images/CTMS.png")} /> */}
-      </View>
+      <Button
+        title="Login"
+        onPress={() => {
+          router.push("/login");
+        }}
+      />
+
       <StatusBar style="auto" />
     </View>
   );
 };
 
-export default index;
+export default Home;
