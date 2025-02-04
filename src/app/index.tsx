@@ -1,23 +1,13 @@
-import { useNavigation, useRouter } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import { Button, Text, View } from "react-native";
+import React from "react";
+import SelectRoleComponent from "../components/SelectRoleComponent";
+import AuthGuard from "../guards/AuthGuard";
 
-const Home = () => {
-  const router = useRouter();
+const IndexPage = () => {
   return (
-    <View className="flex-1 items-center justify-center">
-      <Text>Home</Text>
-
-      <Button
-        title="Login"
-        onPress={() => {
-          router.push("/login");
-        }}
-      />
-
-      <StatusBar style="auto" />
-    </View>
+    <AuthGuard>
+      <SelectRoleComponent />
+    </AuthGuard>
   );
 };
 
-export default Home;
+export default IndexPage;

@@ -1,10 +1,9 @@
 import { create } from "zustand";
-import axiosHTTP from "../interceptors/axiosInterceptor";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface AUTHSTORE {
-  login: (data: any) => void;
+  login: (data: any) => Promise<any>;
   getUserFromLocalStorage: () => Promise<any>;
   getTokenLocalStorage: () => Promise<any>;
 }
@@ -23,25 +22,38 @@ export const authStore = create<AUTHSTORE>((set) => ({
           "Access-Control-Allow-Origin": "*",
         },
       });
-      console.log("--Login Response : ", res.data);
-      AsyncStorage.setItem("appName", "CTMS");
-      AsyncStorage.setItem("basicauth", res.data.token);
-      AsyncStorage.setItem("user", JSON.stringify(res.data));
+      // console.log("--Login Response : ", res.data);
+      return res.data;
     } catch (error: any) {
       if (axios.isAxiosError(error)) {
         console.log("--Error: Axios Error--");
         console.log("Message:", error.message);
-        console.log("Response Data:", error.response?.data);
         console.log("Status Code:", error.response?.status);
-        console.log("Headers:", error.response?.headers);
       } else {
         console.log("--Error: Non-Axios Error--");
         console.log(error);
       }
+      return null;
     }
   },
 
-  getUserFromLocalStorage: async () => {},
+  getUserFromLocalStorage: async () => {
+    const user = await AsyncStorage.getItem("user");
+    console.log("--User from Local Storage : ", user);
+    if (!user) {
+      console.log("--User not found in Local Storage--");
+      return null;
+    }
+    return user;
+  },
 
-  getTokenLocalStorage: async () => {},
+  getTokenLocalStorage: async () => {
+    const token = await AsyncStorage.getItem("basicauth");
+    console.log("--Token from Local Storage : ", token);
+    if (!token) {
+      console.log("--Token not found in Local Storage--");
+      return null;
+    }
+    return token;
+  },
 }));
