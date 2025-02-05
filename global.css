@@ -9,3 +9,7 @@
 .label {
   @apply font-semibold text-lg;
 }
+
+.select {
+  @apply border rounded border-blue-600 p-4 mt-2;
+}

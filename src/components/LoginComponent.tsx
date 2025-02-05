@@ -6,6 +6,7 @@ import { useState } from "react";
 import { authStore } from "../store/authStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
+import { validateEmail } from "../utils/formValidator";
 
 const LoginComponent = () => {
   // Login Form State
@@ -21,10 +22,11 @@ const LoginComponent = () => {
   const router = useRouter();
 
   const handleLogin = async () => {
-    if (!email) {
+    if (!email || !validateEmail(email)) {
       setErrors({ ...errors, email: true });
       return;
     }
+
     if (!password) {
       setErrors({ ...errors, password: true });
       return;
@@ -33,7 +35,9 @@ const LoginComponent = () => {
       setErrors({ email: true, password: true });
       return;
     }
+
     setErrors({ email: false, password: false });
+
     try {
       const res = await login({ username: email, password });
       console.log("--Login Response : ", res);
@@ -42,7 +46,7 @@ const LoginComponent = () => {
       AsyncStorage.setItem("basicauth", res.token);
       AsyncStorage.setItem("user", JSON.stringify(res));
 
-      router.push("/");
+      router.push("/select-role");
 
       setEmail("");
       setPassword("");

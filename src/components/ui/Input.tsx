@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, TextInput, TextInputProps } from "react-native";
 
 interface CustomTextInputProps extends TextInputProps {
-  label: string;
+  label?: string;
   error?: boolean;
   errorText?: string;
 }

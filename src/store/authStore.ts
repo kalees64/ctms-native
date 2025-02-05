@@ -1,11 +1,14 @@
 import { create } from "zustand";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axiosHTTP from "../interceptors/axiosInterceptor";
 
 interface AUTHSTORE {
   login: (data: any) => Promise<any>;
   getUserFromLocalStorage: () => Promise<any>;
   getTokenLocalStorage: () => Promise<any>;
+  getUserRoles: (email: string) => Promise<any>;
+  getProjectsByUserIdRoleId: (userId: string, roleId: string) => Promise<any>;
 }
 
 const apiUrl = process.env.EXPO_PUBLIC_API_URL;
@@ -55,5 +58,44 @@ export const authStore = create<AUTHSTORE>((set) => ({
       return null;
     }
     return token;
+  },
+  getUserRoles: async (email: string) => {
+    console.log("--Email : ", email);
+    try {
+      const res = await axiosHTTP.post(`${apiUrl}/user-accounts/getuserroles`, {
+        email: email,
+      });
+      console.log("--User Roles Response : ", res.data);
+      return res.data;
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        console.log("--Error: Axios Error--");
+        console.log("Message:", error.message);
+        console.log("Status Code:", error.response?.status);
+      } else {
+        console.log("--Error: Non-Axios Error--");
+        console.log(error);
+      }
+      return null;
+    }
+  },
+  getProjectsByUserIdRoleId: async (userId: string, roleId: string) => {
+    try {
+      const res = await axiosHTTP.get(
+        `${apiUrl}/projects/getuserprojects/${userId}/${roleId}`
+      );
+      console.log("--Projects List : ", res.data);
+      return res.data;
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        console.log("--Error: Axios Error--");
+        console.log("Message:", error.message);
+        console.log("Status Code:", error.response?.status);
+      } else {
+        console.log("--Error: Non-Axios Error--");
+        console.log(error);
+      }
+      return null;
+    }
   },
 }));
