@@ -12,6 +12,9 @@ const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 export const reportStore = create<REPORTSTORE>((set) => ({
   reports: [],
   getAllReportsByProjectId: async (projectId: string) => {
+    console.log(
+      `--URL : ${apiUrl}/visits/getallvisitsbyprojectid/${projectId}`
+    );
     try {
       const res = await axiosHTTP.get(
         `${apiUrl}/visits/getallvisitsbyprojectid/${projectId}`

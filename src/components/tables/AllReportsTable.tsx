@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { Link } from "expo-router";
 import * as React from "react";
 import { ScrollView, Text, View } from "react-native";
 import { DataTable, PaperProvider } from "react-native-paper";
@@ -147,7 +148,16 @@ const AllReportsTable = ({ data }: Probs) => {
                     style={{ flexShrink: 1 }}
                     className="w-32 p-1 ps-2"
                   >
-                    {item.visitNo}
+                    <Link
+                      className="text-blue-600"
+                      href={{
+                        pathname: "./report-view/[reportId]",
+                        params: { reportId: item._id },
+                      }}
+                      relativeToDirectory
+                    >
+                      {item.visitNo}
+                    </Link>
                   </Text>
                 </DataTable.Cell>
 

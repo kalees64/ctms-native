@@ -9,47 +9,56 @@ import Loader from "./ui/Loader";
 import { reportStore } from "../store/reportsStore";
 import AllReportsTable from "./tables/AllReportsTable";
 
-const DashboardComponent = () => {
+const ALLReportsComponent = () => {
   const [user, setUser] = useState<any>(null);
   const [projectId, setProjectId] = useState<string>("");
+  const [allReports, setAllReports] = useState<any[]>([]);
+  let loading = false;
 
   const { getUserFromLocalStorage } = authStore();
   const { reports, getAllReportsByProjectId } = reportStore();
+  const router = useRouter();
 
   const getProjectIdFromLocalStorage = async () => {
     const res = await AsyncStorage.getItem("projectId");
     if (res) {
       console.log("--ProjectId : ", res);
       setProjectId(res);
+      getAllReports(res);
+
       return;
     }
     setProjectId("");
   };
 
-  const getAllReports = async () => {
+  const getAllReports = async (projectId: string) => {
     const res = await getAllReportsByProjectId(projectId);
     console.log("--All Reports : ", res);
+    loading = false;
+  };
+
+  const handleInit = async () => {
+    loading = true;
+    const userData = await getUserFromLocalStorage();
+    setUser(JSON.parse(user));
+
+    const projectId = await getProjectIdFromLocalStorage();
+
+    console.log("--Current Path : ", router);
+
+    // const reports = await getAllReports();
   };
 
   useEffect(() => {
-    // Get user from local storage
-    getUserFromLocalStorage()
-      .then((userData: any) => {
-        const user = JSON.parse(userData);
-        setUser(user);
-        getProjectIdFromLocalStorage();
-        getAllReports();
-      })
-      .catch((error: any) => {
-        console.log("Error: ", error);
-      });
+    handleInit();
   }, []);
 
-  if (!user || !projectId || !reports.length) {
+  if ((!user && !projectId) || !reports.length) {
+    console.log("No More");
     return (
       <View className="flex-1  bg-[#f2deba]">
         {/* Header */}
-        <HeaderComponent />
+        {/* <HeaderComponent /> */}
         <Loader />
         <StatusBar style="auto" />
       </View>
@@ -59,9 +68,10 @@ const DashboardComponent = () => {
   return (
     <View className="flex-1  bg-[#f2deba]">
       {/* Header */}
-      <HeaderComponent />
+      {/* <HeaderComponent /> */}
+
       <ScrollView>
-        <View className="flex-1 p-2">
+        <View className="flex-1 ">
           <Text className="font-bold text-2xl">All Reports</Text>
           <View className="pt-4">
             {reports && (
@@ -77,4 +87,4 @@ const DashboardComponent = () => {
   );
 };
 
-export default DashboardComponent;
+export default ALLReportsComponent;
