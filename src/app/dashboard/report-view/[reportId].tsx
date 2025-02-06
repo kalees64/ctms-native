@@ -1,16 +1,11 @@
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
+import ReportViewComponent from "../../../components/ReportViewComponent";
 
 const ReportViewPage = () => {
   const { reportId } = useLocalSearchParams();
-  return (
-    <View className="flex-1">
-      <ScrollView className="flex-1">
-        <Text className="font-bold text-2xl">Report View</Text>
-      </ScrollView>
-    </View>
-  );
+  return <ReportViewComponent reportId={reportId} />;
 };
 
 export default ReportViewPage;

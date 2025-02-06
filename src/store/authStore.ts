@@ -62,7 +62,7 @@ export const authStore = create<AUTHSTORE>((set) => ({
   getUserRoles: async (email: string) => {
     console.log("--Email : ", email);
     try {
-      const res = await axiosHTTP.post(`${apiUrl}/user-accounts/getuserroles`, {
+      const res = await axiosHTTP.post(`/user-accounts/getuserroles`, {
         email: email,
       });
       console.log("--User Roles Response : ", res.data);
@@ -82,7 +82,7 @@ export const authStore = create<AUTHSTORE>((set) => ({
   getProjectsByUserIdRoleId: async (userId: string, roleId: string) => {
     try {
       const res = await axiosHTTP.get(
-        `${apiUrl}/projects/getuserprojects/${userId}/${roleId}`
+        `/projects/getuserprojects/${userId}/${roleId}`
       );
       console.log("--Projects List : ", res.data);
       return res.data;

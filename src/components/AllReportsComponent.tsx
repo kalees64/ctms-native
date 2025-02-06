@@ -59,8 +59,9 @@ const ALLReportsComponent = () => {
       <View className="flex-1  bg-[#f2deba]">
         {/* Header */}
         {/* <HeaderComponent /> */}
+        <Text className="font-bold text-2xl">All Reports</Text>
         <Loader />
-        <StatusBar style="auto" />
+        <StatusBar style="light" backgroundColor="#83103e" />
       </View>
     );
   }
@@ -82,7 +83,7 @@ const ALLReportsComponent = () => {
           </View>
         </View>
       </ScrollView>
-      <StatusBar style="auto" />
+      <StatusBar style="light" backgroundColor="#83103e" />
     </View>
   );
 };

@@ -7,6 +7,8 @@ interface SelectProps {
   placeholder?: string;
   onSelect: (value: OPTION) => void;
   patchValue?: OPTION;
+  error?: boolean;
+  errorText?: string;
 }
 
 interface OPTION {
@@ -19,6 +21,8 @@ const Select: React.FC<SelectProps> = ({
   options,
   onSelect,
   patchValue,
+  error,
+  errorText,
 }) => {
   const [visible, setVisible] = useState(false);
   const [selectedValue, setSelectedValue] = useState<number | string>();
@@ -78,6 +82,7 @@ const Select: React.FC<SelectProps> = ({
           <AntDesign name="caretdown" size={14} color="black" />
         </Pressable>
       </View>
+      {error && <Text className="text-sm text-red-500">{errorText}</Text>}
 
       {/* Dropdown */}
       <View className=" max-h-40">
