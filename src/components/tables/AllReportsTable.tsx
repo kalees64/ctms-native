@@ -217,7 +217,7 @@ const AllReportsTable = ({ data }: Probs) => {
                     style={{ flexShrink: 1 }}
                     className="w-40 p-1 ps-2"
                   >
-                    {format(item.submitDueDate, "dd MMM yyyy")}
+                    {item.submitDueDate ? item.submitDueDate : ""}
                   </Text>
                 </DataTable.Cell>
 
@@ -229,7 +229,7 @@ const AllReportsTable = ({ data }: Probs) => {
                     style={{ flexShrink: 1 }}
                     className="w-40 p-1 ps-2"
                   >
-                    {format(item.finalizationDueDate, "dd MMM yyyy")}
+                    {item.finalizationDueDate ? item.finalizationDueDate : ""}
                   </Text>
                 </DataTable.Cell>
 

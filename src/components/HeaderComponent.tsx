@@ -5,12 +5,15 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
+import { Drawer } from "react-native-paper";
 
 const HeaderComponent = () => {
   const { headerName, fetchUniverseStore } = universalStore();
   const router = useRouter();
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [active, setActive] = React.useState("");
+  const [menuVisible, setMenuVisible] = useState<boolean>(false);
 
   const handleLogout = () => {
     setModalVisible(true);
@@ -22,6 +25,10 @@ const HeaderComponent = () => {
     setModalVisible(false);
     AsyncStorage.clear();
     router.push("/");
+  };
+
+  const toggleMenu = () => {
+    setMenuVisible(!menuVisible);
   };
 
   useEffect(() => {
@@ -36,7 +43,12 @@ const HeaderComponent = () => {
         />
         <Text className="text-xl font-bold text-white">{headerName}</Text>
         <View className="flex flex-row gap-4 items-center">
-          <FontAwesome6 name="bars-staggered" size={24} color="white" />
+          <FontAwesome6
+            name="bars-staggered"
+            size={24}
+            color="white"
+            onPress={toggleMenu}
+          />
           <MaterialCommunityIcons
             name="logout"
             size={24}
@@ -69,6 +81,24 @@ const HeaderComponent = () => {
           </View>
         </View>
       </Modal>
+
+      {/* Sidebar */}
+      {/* {menuVisible && (
+        <Drawer.Section className=" mt-2 p-2">
+          <Drawer.Item
+            label="All Reports"
+            active={active === "first"}
+            onPress={() => {
+              setActive("first");
+              router.push("/dashboard");
+              toggleMenu();
+            }}
+            theme={{
+              colors: { primary: active === "first" ? "white" : "black" },
+            }}
+          />
+        </Drawer.Section>
+      )} */}
     </View>
   );
 };

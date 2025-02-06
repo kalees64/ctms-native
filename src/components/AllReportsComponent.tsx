@@ -73,7 +73,9 @@ const ALLReportsComponent = () => {
 
       <ScrollView>
         <View className="flex-1 ">
-          <Text className="font-bold text-2xl">All Reports</Text>
+          <Text className="font-bold text-2xl">
+            All Reports ({reports.length})
+          </Text>
           <View className="pt-4">
             {reports && (
               <View>
@@ -83,6 +85,7 @@ const ALLReportsComponent = () => {
           </View>
         </View>
       </ScrollView>
+
       <StatusBar style="light" backgroundColor="#83103e" />
     </View>
   );
