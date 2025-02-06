@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Alert,
-  Button,
-  Image,
-  Modal,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Button, Image, Modal, Text, View } from "react-native";
 import { universalStore } from "../store/universalStore";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -61,14 +53,18 @@ const HeaderComponent = () => {
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalText}>
+        <View className="flex-1 items-center justify-center bg-black/50">
+          <View className="w-10/12 p-5 bg-white rounded items-center">
+            <Text className="text-lg font-semibold">
               Are you sure you want to logout?
             </Text>
-            <View style={styles.buttonContainer}>
-              <Button title="Cancel" onPress={() => setModalVisible(false)} />
-              <Button title="Yes, Logout" onPress={logout} />
+            <View className="flex flex-row gap-4 pt-4">
+              <Button
+                title="Cancel"
+                onPress={() => setModalVisible(false)}
+                color={"blue"}
+              />
+              <Button title="Yes, Logout" onPress={logout} color={"red"} />
             </View>
           </View>
         </View>
@@ -76,24 +72,5 @@ const HeaderComponent = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center" },
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
-  modalContent: {
-    width: 300,
-    padding: 20,
-    backgroundColor: "white",
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  modalText: { fontSize: 18, marginBottom: 15 },
-  buttonContainer: { flexDirection: "row", gap: 10 },
-});
 
 export default HeaderComponent;

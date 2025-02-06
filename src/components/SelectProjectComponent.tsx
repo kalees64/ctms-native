@@ -13,6 +13,7 @@ import { useRouter } from "expo-router";
 import { authStore } from "../store/authStore";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Select from "./ui/Select";
 
 const SelectProjectComponent = () => {
   const [user, setUser] = useState<any>(null);
@@ -97,40 +98,18 @@ const SelectProjectComponent = () => {
           <Text className="text-3xl font-bold text-center">Select Project</Text>
         </View>
 
-        <View className="pt-3 px-4">
-          {/* Select Role Component */}
-          <View className="select w-full ">
-            <Pressable
-              className="flex flex-row items-center justify-between"
-              onPress={toggleMenu}
-            >
-              {/* Placeholder */}
-              <Text className="text-gray-600">{selectedProjectName}</Text>
-              <AntDesign name="caretdown" size={14} color="black" />
-            </Pressable>
-          </View>
-
-          {/* Dropdown */}
-          <View className=" max-h-40">
-            {visible && (
-              <ScrollView className="mt-3 bg-white">
-                {projectList.map((project: any) => (
-                  <View className="w-full p-1" key={project._id}>
-                    <Text
-                      className="hover:bg-blue-400 bg-gray-200 p-2"
-                      onPress={() => {
-                        setSelectedProject(project._id);
-                        setSelectedProjectName(project.projectAcronym);
-                        closeMenu();
-                      }}
-                    >
-                      {project.projectAcronym}
-                    </Text>
-                  </View>
-                ))}
-              </ScrollView>
-            )}
-          </View>
+        <View className="pt-3">
+          <Select
+            options={projectList.map((project: any) => ({
+              value: project._id,
+              name: project.projectAcronym,
+            }))}
+            placeholder="Select Project"
+            onSelect={(option: any) => {
+              setSelectedProject(option.value);
+              setSelectedProjectName(option.name);
+            }}
+          />
         </View>
 
         <View className="flex flex-row items-center justify-center pt-5 ">

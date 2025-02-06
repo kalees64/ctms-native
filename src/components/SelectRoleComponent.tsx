@@ -12,9 +12,9 @@ import {
 import { authStore } from "../store/authStore";
 import { useEffect, useState } from "react";
 import { PaperProvider } from "react-native-paper";
-import SelectComponent from "./ui/SelectComponent";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Select from "./ui/Select";
 
 const SelectRoleComponent = () => {
   const [user, setUser] = useState<any>(null);
@@ -107,40 +107,18 @@ const SelectRoleComponent = () => {
             <Text className="text-3xl font-bold text-center">Select Role</Text>
           </View>
 
-          <View className="pt-3 px-4">
-            {/* Select Role Component */}
-            <View className="select w-full">
-              <Pressable
-                className="flex flex-row items-center justify-between"
-                onPress={toggleMenu}
-              >
-                {/* Placeholder */}
-                <Text className="text-gray-600">{selectedRoleName}</Text>
-                <AntDesign name="caretdown" size={14} color="black" />
-              </Pressable>
-            </View>
-
-            {/* Dropdown */}
-            <View className=" max-h-40">
-              {visible && (
-                <ScrollView className="mt-3 bg-white">
-                  {allUserRoles.map((role: any) => (
-                    <View className="w-full p-1" key={role.roleId}>
-                      <Text
-                        className="hover:bg-blue-400 bg-gray-200 p-2"
-                        onPress={() => {
-                          setSelectedRole(role.roleId);
-                          setSelectedRoleName(role.roleDescription);
-                          closeMenu();
-                        }}
-                      >
-                        {role.roleDescription}
-                      </Text>
-                    </View>
-                  ))}
-                </ScrollView>
-              )}
-            </View>
+          <View className="pt-3">
+            <Select
+              options={allUserRoles.map((role: any) => ({
+                value: role.roleId,
+                name: role.roleDescription,
+              }))}
+              placeholder="Select Role"
+              onSelect={(option: any) => {
+                setSelectedRole(option.value);
+                setSelectedRoleName(option.name);
+              }}
+            />
           </View>
 
           <View className="flex flex-row items-center justify-evenly pt-5 ">
