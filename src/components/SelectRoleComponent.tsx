@@ -63,6 +63,10 @@ const SelectRoleComponent = () => {
 
     AsyncStorage.setItem("user", JSON.stringify(userDetails));
 
+    if (["ROLE_CTMS_ADMIN"].includes(user.roleName)) {
+      router.push("/dashboard");
+      return;
+    }
     router.push("/select-project");
   };
 

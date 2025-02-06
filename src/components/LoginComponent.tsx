@@ -1,6 +1,13 @@
 import "./../../global.css";
 import { StatusBar } from "expo-status-bar";
-import { Image, ImageBackground, Pressable, Text, View } from "react-native";
+import {
+  Alert,
+  Image,
+  ImageBackground,
+  Pressable,
+  Text,
+  View,
+} from "react-native";
 import Input from "../components/ui/Input";
 import { useState } from "react";
 import { authStore } from "../store/authStore";
@@ -41,6 +48,15 @@ const LoginComponent = () => {
     try {
       const res = await login({ username: email, password });
       console.log("--Login Response : ", res);
+
+      if (res === "no user") {
+        Alert.alert("Alert", "Invalid Login credentials");
+        return;
+      }
+      if (res === null) {
+        Alert.alert("Alert", "Something went wrong");
+        return;
+      }
 
       AsyncStorage.setItem("appName", "CTMS");
       AsyncStorage.setItem("basicauth", res.token);

@@ -36,6 +36,9 @@ export const authStore = create<AUTHSTORE>((set) => ({
         console.log("--Error: Non-Axios Error--");
         console.log(error);
       }
+      if (error.response?.status == 404) {
+        return "no user";
+      }
       return null;
     }
   },
