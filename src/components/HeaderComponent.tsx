@@ -5,15 +5,22 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
-import { Drawer } from "react-native-paper";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import SideBarComponent from "./SideBarComponent";
+import Toast from "react-native-toast-message";
 
-const HeaderComponent = () => {
+const HeaderComponent = ({
+  menuVisible,
+  setMenuVisible,
+}: {
+  menuVisible: boolean;
+  setMenuVisible: (data: boolean) => void;
+}) => {
   const { headerName, fetchUniverseStore } = universalStore();
   const router = useRouter();
 
   const [modalVisible, setModalVisible] = useState(false);
   const [active, setActive] = React.useState("");
-  const [menuVisible, setMenuVisible] = useState<boolean>(false);
 
   const handleLogout = () => {
     setModalVisible(true);
@@ -81,24 +88,6 @@ const HeaderComponent = () => {
           </View>
         </View>
       </Modal>
-
-      {/* Sidebar */}
-      {/* {menuVisible && (
-        <Drawer.Section className=" mt-2 p-2">
-          <Drawer.Item
-            label="All Reports"
-            active={active === "first"}
-            onPress={() => {
-              setActive("first");
-              router.push("/dashboard");
-              toggleMenu();
-            }}
-            theme={{
-              colors: { primary: active === "first" ? "white" : "black" },
-            }}
-          />
-        </Drawer.Section>
-      )} */}
     </View>
   );
 };

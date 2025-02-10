@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ctms-native",
-    "slug": "ctms-native",
+    "name": "CTMS",
+    "slug": "CTMS",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
@@ -27,10 +27,15 @@
       "favicon": "./src/assets/favicon.png",
       "bundler": "metro"
     },
-    "plugins": ["expo-router"],
+    "plugins": [
+      "expo-router"
+    ],
     "extra": {
       "router": {
         "origin": false
+      },
+      "eas": {
+        "projectId": "7e8c81f6-53fb-4058-8630-f70a192adc12"
       }
     }
   }
